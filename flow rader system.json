@@ -1,0 +1,202 @@
+[
+    {
+        "id": "11d70e319a45b669",
+        "type": "tab",
+        "label": "Flow 4",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "93cfc5ebd19a5980",
+        "type": "mqtt in",
+        "z": "11d70e319a45b669",
+        "name": "rader_detect",
+        "topic": "fortress/radar",
+        "qos": "2",
+        "datatype": "utf8",
+        "broker": "9bb1441dc0bd6956",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 110,
+        "y": 260,
+        "wires": [
+            [
+                "8dcec88e59ce4508",
+                "3f4df40fd11a9c29"
+            ]
+        ]
+    },
+    {
+        "id": "8dcec88e59ce4508",
+        "type": "function",
+        "z": "11d70e319a45b669",
+        "name": "function 3",
+        "func": "let data = msg.payload;\n\n// แปลงข้อมูลหากส่งมาเป็น String\nif (typeof data === 'string') {\n    try { \n        data = JSON.parse(data); \n    } catch(e) { \n        return null; \n    }\n}\n\nlet angle = Number(data.angle) || 0;\nlet distance = Number(data.distance) || 0;\nlet isAlert = (distance <= 30 && distance > 0);\n\n// ขาที่ 1 (จุดบนสุด) -> ส่งตัวเลขระยะทางไปให้ Gauge\nlet msgGauge = { \n    payload: (distance > 0 && distance <= 40) ? distance : 40 \n};\n\n// ขาที่ 2 (จุดตรงกลาง) -> ส่งข้อความสถานะไปให้ป้ายแจ้งเตือน\nlet msgStatus = { \n    payload: isAlert ? \"⚠️ ตรวจพบวัตถุบุกรุก!\" : \"✅ สถานะปกติ\",\n    alert: isAlert \n};\n\n// ขาที่ 3 (จุดล่างสุด) -> ส่งชุดข้อมูลไปให้เรดาร์สแกน Canvas\nlet msgRadar = { \n    payload: { \n        angle: angle, \n        distance: distance \n    } \n};\n\nreturn [msgGauge, msgStatus, msgRadar];",
+        "outputs": 3,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 260,
+        "wires": [
+            [
+                "08f5de3af54245c1"
+            ],
+            [
+                "f94cbaaddb193710"
+            ],
+            [
+                "8e0ba484c588c94e"
+            ]
+        ]
+    },
+    {
+        "id": "8e0ba484c588c94e",
+        "type": "ui_template",
+        "z": "11d70e319a45b669",
+        "group": "c9369760a91e4c0e",
+        "name": "",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "format": "<div style=\"text-align: center; background: #000; padding: 10px; border-radius: 8px;\">\n    <canvas id=\"radarCanvas\" width=\"700\" height=\"420\" style=\"max-width: 100%; height: auto;\"></canvas>\n</div>\n\n<script>\n(function(scope) {\n    var canvas, ctx;\n    var iAngle = 0, iDistance = 0;\n\n    function init() {\n        canvas = document.getElementById('radarCanvas');\n        if (!canvas) return;\n        ctx = canvas.getContext('2d');\n        draw(); // วาดโครงเรดาร์ตั้งต้นทันที\n    }\n\n    setTimeout(init, 200);\n\n    scope.$watch('msg', function(msg) {\n        if (!msg || !msg.payload) return;\n        if (!canvas || !ctx) init();\n\n        iAngle = msg.payload.angle;\n        iDistance = msg.payload.distance;\n        draw();\n    });\n\n    function draw() {\n        if (!ctx) return;\n        var w = canvas.width;\n        var h = canvas.height;\n        var cx = w / 2;\n        var cy = h - 40;\n        var maxR = (w - 60) / 2;\n\n        // Fade background\n        ctx.fillStyle = 'rgba(0, 0, 0, 0.08)';\n        ctx.fillRect(0, 0, w, h - 35);\n\n        ctx.save();\n        ctx.translate(cx, cy);\n\n        // วาดวงกลมสเกล\n        ctx.strokeStyle = '#62f51f';\n        ctx.lineWidth = 2;\n        for (var r = 0.25; r <= 1.0; r += 0.25) {\n            ctx.beginPath();\n            ctx.arc(0, 0, maxR * r, Math.PI, 2 * Math.PI);\n            ctx.stroke();\n        }\n\n        // วาดเส้นองศา\n        for (var a = 0; a <= 180; a += 30) {\n            var rad = (a * Math.PI) / 180;\n            ctx.beginPath();\n            ctx.moveTo(0, 0);\n            ctx.lineTo(-maxR * Math.cos(rad), -maxR * Math.sin(rad));\n            ctx.stroke();\n        }\n\n        // วาดเส้นสแกนเขียว\n        var currentRad = (iAngle * Math.PI) / 180;\n        ctx.strokeStyle = '#1efa3c';\n        ctx.lineWidth = 4;\n        ctx.beginPath();\n        ctx.moveTo(0, 0);\n        ctx.lineTo(-maxR * Math.cos(currentRad), -maxR * Math.sin(currentRad));\n        ctx.stroke();\n\n        // วาดแถบวัตถุสีแดง\n        if (iDistance > 0 && iDistance < 40) {\n            var pDist = iDistance * (maxR / 40.0);\n            ctx.strokeStyle = '#ff0a0a';\n            ctx.lineWidth = 6;\n            ctx.beginPath();\n            ctx.moveTo(-pDist * Math.cos(currentRad), -pDist * Math.sin(currentRad));\n            ctx.lineTo(-maxR * Math.cos(currentRad), -maxR * Math.sin(currentRad));\n            ctx.stroke();\n        }\n        ctx.restore();\n\n        // แสดงข้อความสถานะด้านล่าง\n        ctx.fillStyle = '#000';\n        ctx.fillRect(0, h - 35, w, 35);\n        ctx.fillStyle = '#62f51f';\n        ctx.font = '16px Arial';\n        ctx.textAlign = 'center';\n        \n        var objText = (iDistance > 0 && iDistance < 40) ? \"In Range\" : \"Out of Range\";\n        ctx.fillText(\"Object: \" + objText + \"  |  Angle: \" + iAngle + \"°  |  Distance: \" + (iDistance < 40 && iDistance > 0 ? iDistance + \" cm\" : \"---\"), cx, h - 10);\n    }\n})(scope);\n</script>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 620,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3f4df40fd11a9c29",
+        "type": "debug",
+        "z": "11d70e319a45b669",
+        "name": "debug 5",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 320,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "08f5de3af54245c1",
+        "type": "ui_gauge",
+        "z": "11d70e319a45b669",
+        "name": "",
+        "group": "c9369760a91e4c0e",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "ระยะทางวัตถุ (Object Distance)",
+        "label": "",
+        "format": "{{value}} cm",
+        "min": 0,
+        "max": "40",
+        "colors": [
+            "#b30f0f",
+            "#e6e600",
+            "#3acb65"
+        ],
+        "seg1": "15",
+        "seg2": "30",
+        "diff": false,
+        "className": "",
+        "x": 650,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "f94cbaaddb193710",
+        "type": "ui_template",
+        "z": "11d70e319a45b669",
+        "group": "c9369760a91e4c0e",
+        "name": "สถานะความปลอดภัย",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "format": "<div style=\"padding:12px; border-radius:8px; font-weight:bold; font-size:18px; text-align:center; color:#fff;\"\n     ng-style=\"{'background-color': msg.alert ? '#dc3545' : '#28a745'}\">\n    {{msg.payload}}\n</div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 630,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9bb1441dc0bd6956",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "192.168.1.9",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "c9369760a91e4c0e",
+        "type": "ui_group",
+        "name": "Radar System",
+        "tab": "267628ac2c3ec3bb",
+        "order": 3,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "267628ac2c3ec3bb",
+        "type": "ui_tab",
+        "name": "Security System",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "8674c8b255ba876d",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-dashboard": "3.6.6"
+        }
+    }
+]

@@ -1,0 +1,304 @@
+[
+    {
+        "id": "457e48def4330eac",
+        "type": "tab",
+        "label": "Flow 7",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "7d79c0d2120a5d63",
+        "type": "mqtt in",
+        "z": "457e48def4330eac",
+        "name": "",
+        "topic": "security/corner1",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "9bb1441dc0bd6956",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 560.2857055664062,
+        "y": 194.57142639160156,
+        "wires": [
+            [
+                "a750bc7143f70358",
+                "90aa834548cad0df"
+            ]
+        ]
+    },
+    {
+        "id": "f748b871b6b5a032",
+        "type": "mqtt in",
+        "z": "457e48def4330eac",
+        "name": "",
+        "topic": "security/corner4",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "9bb1441dc0bd6956",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 560,
+        "y": 320,
+        "wires": [
+            [
+                "ada47612037a4592",
+                "90aa834548cad0df"
+            ]
+        ]
+    },
+    {
+        "id": "cbacec72674859d1",
+        "type": "mqtt in",
+        "z": "457e48def4330eac",
+        "name": "",
+        "topic": "security/corner3",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "9bb1441dc0bd6956",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 560,
+        "y": 280,
+        "wires": [
+            [
+                "0f729f05144db460",
+                "90aa834548cad0df"
+            ]
+        ]
+    },
+    {
+        "id": "f3774431b47cfa32",
+        "type": "mqtt in",
+        "z": "457e48def4330eac",
+        "name": "",
+        "topic": "security/corner2",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "9bb1441dc0bd6956",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 560,
+        "y": 240,
+        "wires": [
+            [
+                "89aaba0d2c33de1f",
+                "90aa834548cad0df"
+            ]
+        ]
+    },
+    {
+        "id": "a750bc7143f70358",
+        "type": "ui_text",
+        "z": "457e48def4330eac",
+        "group": "bb0f888fea78fd04",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "กำแพงโซน 1 (Corner 1)",
+        "format": "{{msg.payload == '1' ? '<font color=red><b>🚨 DETECTED!</b></font>' : '<font color=green><b>✅ SAFE</b></font>'}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 870,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "ada47612037a4592",
+        "type": "ui_text",
+        "z": "457e48def4330eac",
+        "group": "bb0f888fea78fd04",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "กำแพงโซน 4 (Corner 4)",
+        "format": "{{msg.payload == '1' ? '<font color=red><b>🚨 DETECTED!</b></font>' : '<font color=green><b>✅ SAFE</b></font>'}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 870,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "0f729f05144db460",
+        "type": "ui_text",
+        "z": "457e48def4330eac",
+        "group": "bb0f888fea78fd04",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "กำแพงโซน 3 (Corner 3)",
+        "format": "{{msg.payload == '1' ? '<font color=red><b>🚨 DETECTED!</b></font>' : '<font color=green><b>✅ SAFE</b></font>'}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 870,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "89aaba0d2c33de1f",
+        "type": "ui_text",
+        "z": "457e48def4330eac",
+        "group": "bb0f888fea78fd04",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "กำแพงโซน 2 (Corner 2)",
+        "format": "{{msg.payload == '1' ? '<font color=red><b>🚨 DETECTED!</b></font>' : '<font color=green><b>✅ SAFE</b></font>'}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 870,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "90aa834548cad0df",
+        "type": "switch",
+        "z": "457e48def4330eac",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 830,
+        "y": 420,
+        "wires": [
+            [
+                "0ca2b53467d1c07e"
+            ]
+        ]
+    },
+    {
+        "id": "db0cdf69d2bdb041",
+        "type": "ui_toast",
+        "z": "457e48def4330eac",
+        "position": "top right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "",
+        "name": "",
+        "x": 1310,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "0ca2b53467d1c07e",
+        "type": "function",
+        "z": "457e48def4330eac",
+        "name": "แปลงชื่อโซนภาษาไทย",
+        "func": "let zone = \"\";\n\nswitch(msg.topic) {\n    case \"security/corner1\":\n        zone = \"กำแพงโซน 1\";\n        break;\n    case \"security/corner2\":\n        zone = \"กำแพงโซน 2\";\n        break;\n    case \"security/corner3\":\n        zone = \"กำแพงโซน 3\";\n        break;\n    case \"security/corner4\":\n        zone = \"กำแพงโซน 4\";\n        break;\n    default:\n        zone = msg.topic;\n}\n\nmsg.payload = \"🚨 WARNING: ตรวจพบสิ่งแปลกปลอมบริเวณ \" + zone + \"!\";\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1040,
+        "y": 420,
+        "wires": [
+            [
+                "db0cdf69d2bdb041"
+            ]
+        ]
+    },
+    {
+        "id": "9bb1441dc0bd6956",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "192.168.1.9",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "bb0f888fea78fd04",
+        "type": "ui_group",
+        "name": "ระบบป้องกันกำแพง (Perimeter Security)",
+        "tab": "267628ac2c3ec3bb",
+        "order": 4,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "267628ac2c3ec3bb",
+        "type": "ui_tab",
+        "name": "Security System",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "23f626a78895f640",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-dashboard": "3.6.6"
+        }
+    }
+]

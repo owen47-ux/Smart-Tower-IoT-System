@@ -1,0 +1,717 @@
+[
+    {
+        "id": "a0849e7f6227c52c",
+        "type": "tab",
+        "label": "Flow 5",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "636f2bb69e265126",
+        "type": "inject",
+        "z": "a0849e7f6227c52c",
+        "name": "",
+        "props": [
+            {
+                "p": "topic",
+                "vt": "str"
+            },
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "home/relay/1/set",
+        "payload": "ON",
+        "payloadType": "str",
+        "x": 450,
+        "y": 60,
+        "wires": [
+            [
+                "70b125a5ad0e5135"
+            ]
+        ]
+    },
+    {
+        "id": "acc004d4f78529af",
+        "type": "inject",
+        "z": "a0849e7f6227c52c",
+        "name": "",
+        "props": [
+            {
+                "p": "topic",
+                "vt": "str"
+            },
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "home/relay/8/set",
+        "payload": "ON",
+        "payloadType": "str",
+        "x": 450,
+        "y": 340,
+        "wires": [
+            [
+                "70b125a5ad0e5135"
+            ]
+        ]
+    },
+    {
+        "id": "7aca4e871d0c888a",
+        "type": "inject",
+        "z": "a0849e7f6227c52c",
+        "name": "",
+        "props": [
+            {
+                "p": "topic",
+                "vt": "str"
+            },
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "home/relay/3/set",
+        "payload": "ON",
+        "payloadType": "str",
+        "x": 450,
+        "y": 140,
+        "wires": [
+            [
+                "70b125a5ad0e5135"
+            ]
+        ]
+    },
+    {
+        "id": "ff017a0cb61a3670",
+        "type": "inject",
+        "z": "a0849e7f6227c52c",
+        "name": "",
+        "props": [
+            {
+                "p": "topic",
+                "vt": "str"
+            },
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "home/relay/2/set",
+        "payload": "ON",
+        "payloadType": "str",
+        "x": 450,
+        "y": 100,
+        "wires": [
+            [
+                "70b125a5ad0e5135"
+            ]
+        ]
+    },
+    {
+        "id": "9a52c4679a144d74",
+        "type": "inject",
+        "z": "a0849e7f6227c52c",
+        "name": "",
+        "props": [
+            {
+                "p": "topic",
+                "vt": "str"
+            },
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "home/relay/7set",
+        "payload": "ON",
+        "payloadType": "str",
+        "x": 450,
+        "y": 300,
+        "wires": [
+            [
+                "70b125a5ad0e5135"
+            ]
+        ]
+    },
+    {
+        "id": "0a0c22b7ef2312bf",
+        "type": "inject",
+        "z": "a0849e7f6227c52c",
+        "name": "",
+        "props": [
+            {
+                "p": "topic",
+                "vt": "str"
+            },
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "home/relay/6/set",
+        "payload": "ON",
+        "payloadType": "str",
+        "x": 450,
+        "y": 260,
+        "wires": [
+            [
+                "70b125a5ad0e5135"
+            ]
+        ]
+    },
+    {
+        "id": "334004b08f06a4be",
+        "type": "inject",
+        "z": "a0849e7f6227c52c",
+        "name": "",
+        "props": [
+            {
+                "p": "topic",
+                "vt": "str"
+            },
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "home/relay/5/set",
+        "payload": "ON",
+        "payloadType": "str",
+        "x": 450,
+        "y": 220,
+        "wires": [
+            [
+                "70b125a5ad0e5135"
+            ]
+        ]
+    },
+    {
+        "id": "eae6881214c14d66",
+        "type": "inject",
+        "z": "a0849e7f6227c52c",
+        "name": "",
+        "props": [
+            {
+                "p": "topic",
+                "vt": "str"
+            },
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "home/relay/4/set",
+        "payload": "ON",
+        "payloadType": "str",
+        "x": 450,
+        "y": 180,
+        "wires": [
+            [
+                "70b125a5ad0e5135"
+            ]
+        ]
+    },
+    {
+        "id": "3162a73acfaeb028",
+        "type": "inject",
+        "z": "a0849e7f6227c52c",
+        "name": "",
+        "props": [
+            {
+                "p": "topic",
+                "vt": "str"
+            },
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "home/relay/10/set",
+        "payload": "ON",
+        "payloadType": "str",
+        "x": 460,
+        "y": 420,
+        "wires": [
+            [
+                "70b125a5ad0e5135"
+            ]
+        ]
+    },
+    {
+        "id": "66734fe04408ed2d",
+        "type": "inject",
+        "z": "a0849e7f6227c52c",
+        "name": "",
+        "props": [
+            {
+                "p": "topic",
+                "vt": "str"
+            },
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "home/relay/9/set",
+        "payload": "ON",
+        "payloadType": "str",
+        "x": 450,
+        "y": 380,
+        "wires": [
+            [
+                "70b125a5ad0e5135"
+            ]
+        ]
+    },
+    {
+        "id": "70b125a5ad0e5135",
+        "type": "mqtt out",
+        "z": "a0849e7f6227c52c",
+        "name": "ESP32 Relay Control",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "9bb1441dc0bd6956",
+        "x": 780,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "c9ec1c36e77faae6",
+        "type": "ui_switch",
+        "z": "a0849e7f6227c52c",
+        "name": "สวิตช์ไฟช่อง 1",
+        "label": "สวิตช์ไฟช่อง 1",
+        "tooltip": "",
+        "group": "e34a7ffbd607efc3",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "home/relay/1/set",
+        "topicType": "str",
+        "style": "",
+        "onvalue": "ON",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "OFF",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 440,
+        "y": 460,
+        "wires": [
+            [
+                "70b125a5ad0e5135"
+            ]
+        ]
+    },
+    {
+        "id": "75abf794f55c9fe9",
+        "type": "ui_switch",
+        "z": "a0849e7f6227c52c",
+        "name": "สวิตช์ไฟช่อง 10",
+        "label": "สวิตช์ไฟช่อง 10",
+        "tooltip": "",
+        "group": "e34a7ffbd607efc3",
+        "order": 10,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "home/relay/10/set",
+        "topicType": "str",
+        "style": "",
+        "onvalue": "ON",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "OFF",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 440,
+        "y": 820,
+        "wires": [
+            [
+                "70b125a5ad0e5135"
+            ]
+        ]
+    },
+    {
+        "id": "808257a844bf12b6",
+        "type": "ui_switch",
+        "z": "a0849e7f6227c52c",
+        "name": "สวิตช์ไฟช่อง 9",
+        "label": "สวิตช์ไฟช่อง 9",
+        "tooltip": "",
+        "group": "e34a7ffbd607efc3",
+        "order": 9,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "home/relay/9/set",
+        "topicType": "str",
+        "style": "",
+        "onvalue": "ON",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "OFF",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 440,
+        "y": 780,
+        "wires": [
+            [
+                "70b125a5ad0e5135"
+            ]
+        ]
+    },
+    {
+        "id": "b9d86482ab8f4ea2",
+        "type": "ui_switch",
+        "z": "a0849e7f6227c52c",
+        "name": "สวิตช์ไฟช่อง 8",
+        "label": "สวิตช์ไฟช่อง 8",
+        "tooltip": "",
+        "group": "e34a7ffbd607efc3",
+        "order": 8,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "home/relay/8/set",
+        "topicType": "str",
+        "style": "",
+        "onvalue": "ON",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "OFF",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 440,
+        "y": 740,
+        "wires": [
+            [
+                "70b125a5ad0e5135"
+            ]
+        ]
+    },
+    {
+        "id": "cf1fc369816f8a08",
+        "type": "ui_switch",
+        "z": "a0849e7f6227c52c",
+        "name": "สวิตช์ไฟช่อง 6",
+        "label": "สวิตช์ไฟช่อง 6",
+        "tooltip": "",
+        "group": "e34a7ffbd607efc3",
+        "order": 6,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "home/relay/6/set",
+        "topicType": "str",
+        "style": "",
+        "onvalue": "ON",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "OFF",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 440,
+        "y": 660,
+        "wires": [
+            [
+                "70b125a5ad0e5135"
+            ]
+        ]
+    },
+    {
+        "id": "545382b76c29b017",
+        "type": "ui_switch",
+        "z": "a0849e7f6227c52c",
+        "name": "สวิตช์ไฟช่อง 7",
+        "label": "สวิตช์ไฟช่อง 7",
+        "tooltip": "",
+        "group": "e34a7ffbd607efc3",
+        "order": 7,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "home/relay/7/set",
+        "topicType": "str",
+        "style": "",
+        "onvalue": "ON",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "OFF",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 440,
+        "y": 700,
+        "wires": [
+            [
+                "70b125a5ad0e5135"
+            ]
+        ]
+    },
+    {
+        "id": "6e9079c1bd39e6dd",
+        "type": "ui_switch",
+        "z": "a0849e7f6227c52c",
+        "name": "สวิตช์ไฟช่อง 5",
+        "label": "สวิตช์ไฟช่อง 5",
+        "tooltip": "",
+        "group": "e34a7ffbd607efc3",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "home/relay/5/set",
+        "topicType": "str",
+        "style": "",
+        "onvalue": "ON",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "OFF",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 440,
+        "y": 620,
+        "wires": [
+            [
+                "70b125a5ad0e5135"
+            ]
+        ]
+    },
+    {
+        "id": "278b17e76ed539d0",
+        "type": "ui_switch",
+        "z": "a0849e7f6227c52c",
+        "name": "สวิตช์ไฟช่อง 4",
+        "label": "สวิตช์ไฟช่อง 4",
+        "tooltip": "",
+        "group": "e34a7ffbd607efc3",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "home/relay/4/set",
+        "topicType": "str",
+        "style": "",
+        "onvalue": "ON",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "OFF",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 440,
+        "y": 580,
+        "wires": [
+            [
+                "70b125a5ad0e5135"
+            ]
+        ]
+    },
+    {
+        "id": "4abb6d9337b09184",
+        "type": "ui_switch",
+        "z": "a0849e7f6227c52c",
+        "name": "สวิตช์ไฟช่อง 3",
+        "label": "สวิตช์ไฟช่อง 3",
+        "tooltip": "",
+        "group": "e34a7ffbd607efc3",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "home/relay/3/set",
+        "topicType": "str",
+        "style": "",
+        "onvalue": "ON",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "OFF",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 440,
+        "y": 540,
+        "wires": [
+            [
+                "70b125a5ad0e5135"
+            ]
+        ]
+    },
+    {
+        "id": "3b4bc73708267745",
+        "type": "ui_switch",
+        "z": "a0849e7f6227c52c",
+        "name": "สวิตช์ไฟช่อง 2",
+        "label": "สวิตช์ไฟช่อง 2",
+        "tooltip": "",
+        "group": "e34a7ffbd607efc3",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "home/relay/2/set",
+        "topicType": "str",
+        "style": "",
+        "onvalue": "ON",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "OFF",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 440,
+        "y": 500,
+        "wires": [
+            [
+                "70b125a5ad0e5135"
+            ]
+        ]
+    },
+    {
+        "id": "9bb1441dc0bd6956",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "192.168.1.9",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "e34a7ffbd607efc3",
+        "type": "ui_group",
+        "name": "Relay Control (ควบคุมไฟ 10 ช่อง)",
+        "tab": "5be03b391ade4796",
+        "order": 1,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "5be03b391ade4796",
+        "type": "ui_tab",
+        "name": "Control System",
+        "icon": "dashboard",
+        "order": 3,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "b961098a913d1342",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-dashboard": "3.6.6"
+        }
+    }
+]

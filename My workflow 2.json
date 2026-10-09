@@ -1,0 +1,102 @@
+{
+  "name": "My workflow 2",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "=POST",
+        "path": "security-alert",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -96,
+        0
+      ],
+      "id": "c664a4b5-87d5-4ba0-9fb6-4b33a2c0f97d",
+      "name": "Webhook",
+      "webhookId": "f5b8a502-c320-4f44-829e-7d5f723b687e"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// ดึงข้อความ Base64 ที่ส่งมาจาก Node-RED\nlet base64String = $json.body.image_base64 || '';\n\n// ตัด Prefix \"data:image/jpeg;base64,\" ออกถ้ามี\nif (base64String.includes(',')) {\n    base64String = base64String.split(',')[1];\n}\n\n// แปลง Base64 เป็น Buffer สำหรับส่งให้ Telegram\nconst buffer = Buffer.from(base64String, 'base64');\n\nreturn {\n    json: $json, // คงค่า JSON เดิมไว้\n    binary: {\n        data: {\n            data: buffer.toString('base64'),\n            mimeType: 'image/jpeg',\n            fileName: 'capture.jpg'\n        }\n    }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        192,
+        0
+      ],
+      "id": "58552044-4788-4858-b484-942943d0c550",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "operation": "sendPhoto",
+        "chatId": "8796877403",
+        "binaryData": true,
+        "additionalFields": {
+          "caption": "={{ $json.body.caption }}",
+          "parse_mode": "HTML"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        432,
+        0
+      ],
+      "id": "038929ff-834e-4d77-a92a-7f046f77d275",
+      "name": "Send a photo message",
+      "webhookId": "1560174b-f706-4f76-b86a-b84372eddbfd",
+      "credentials": {
+        "telegramApi": {
+          "id": "7MugPkKXZUszeRr7",
+          "name": "Telegram account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Send a photo message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "versionId": "db117f1a-8d6e-42ab-8b39-c4877fd3332e",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "d8ce5fad3bb7aa4eed3762105ad38eed640c45bf88ac70d9ebde4758eded5f88"
+  },
+  "nodeGroups": [],
+  "id": "cYXKBfbINueqhbmX",
+  "tags": []
+}

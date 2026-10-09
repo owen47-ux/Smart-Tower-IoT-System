@@ -1,0 +1,492 @@
+[
+    {
+        "id": "5c505a24b86fc31a",
+        "type": "tab",
+        "label": "Flow 6",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "180fc3e7bbd490eb",
+        "type": "mqtt in",
+        "z": "5c505a24b86fc31a",
+        "name": "DHT22 Temp",
+        "topic": "home/sensor/dht22_temp",
+        "qos": "2",
+        "datatype": "utf8",
+        "broker": "9bb1441dc0bd6956",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 130,
+        "y": 20,
+        "wires": [
+            [
+                "9f35b28dddd7cddd"
+            ]
+        ]
+    },
+    {
+        "id": "9f35b28dddd7cddd",
+        "type": "ui_gauge",
+        "z": "5c505a24b86fc31a",
+        "name": "",
+        "group": "87a945e9cffdae3c",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "อุณหภูมิ DHT22 (°C)",
+        "label": "units",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "50",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "15",
+        "seg2": "30",
+        "diff": false,
+        "className": "",
+        "x": 420,
+        "y": 20,
+        "wires": []
+    },
+    {
+        "id": "0e2a7e29dbaf678d",
+        "type": "mqtt in",
+        "z": "5c505a24b86fc31a",
+        "name": "DHT22 Humidity ",
+        "topic": "home/sensor/dht22_hum",
+        "qos": "2",
+        "datatype": "utf8",
+        "broker": "9bb1441dc0bd6956",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 140,
+        "y": 100,
+        "wires": [
+            [
+                "86edfa1b300155e1"
+            ]
+        ]
+    },
+    {
+        "id": "86edfa1b300155e1",
+        "type": "ui_gauge",
+        "z": "5c505a24b86fc31a",
+        "name": "",
+        "group": "87a945e9cffdae3c",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "ความชื้น DHT22 (%)",
+        "label": "units",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "40",
+        "seg2": "80",
+        "diff": false,
+        "className": "",
+        "x": 410,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "7c7992279023a2a5",
+        "type": "mqtt in",
+        "z": "5c505a24b86fc31a",
+        "name": "DHT11 Humidity ",
+        "topic": "home/sensor/dht11_hum",
+        "qos": "2",
+        "datatype": "utf8",
+        "broker": "9bb1441dc0bd6956",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 140,
+        "y": 260,
+        "wires": [
+            [
+                "12bdba31adbaefd4"
+            ]
+        ]
+    },
+    {
+        "id": "12bdba31adbaefd4",
+        "type": "ui_gauge",
+        "z": "5c505a24b86fc31a",
+        "name": "",
+        "group": "87a945e9cffdae3c",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "ความชื้น DHT11 (%)",
+        "label": "units",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "40",
+        "seg2": "80",
+        "diff": false,
+        "className": "",
+        "x": 410,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "5323ed353f7ac857",
+        "type": "mqtt in",
+        "z": "5c505a24b86fc31a",
+        "name": "DHT11 Temp",
+        "topic": "home/sensor/dht11_temp",
+        "qos": "2",
+        "datatype": "utf8",
+        "broker": "9bb1441dc0bd6956",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 130,
+        "y": 180,
+        "wires": [
+            [
+                "018e11f24004aa14"
+            ]
+        ]
+    },
+    {
+        "id": "018e11f24004aa14",
+        "type": "ui_gauge",
+        "z": "5c505a24b86fc31a",
+        "name": "",
+        "group": "87a945e9cffdae3c",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "อุณหภูมิ DHT11 (°C)",
+        "label": "units",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "50",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "15",
+        "seg2": "30",
+        "diff": false,
+        "className": "",
+        "x": 410,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "a64266e756ad8b82",
+        "type": "mqtt in",
+        "z": "5c505a24b86fc31a",
+        "name": "สถานะพัดลมระบายความร้อน (Relay Status):",
+        "topic": "home/relay/status",
+        "qos": "2",
+        "datatype": "utf8",
+        "broker": "9bb1441dc0bd6956",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 200,
+        "y": 360,
+        "wires": [
+            [
+                "149aa3ae31c55fbf"
+            ]
+        ]
+    },
+    {
+        "id": "149aa3ae31c55fbf",
+        "type": "ui_text",
+        "z": "5c505a24b86fc31a",
+        "group": "87a945e9cffdae3c",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "สถานะพัดลม 12V",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 540,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "32369c8c0aba4490",
+        "type": "mqtt in",
+        "z": "5c505a24b86fc31a",
+        "name": "MQ-3",
+        "topic": "home/sensor/alcohol",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "9bb1441dc0bd6956",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 230,
+        "y": 520,
+        "wires": [
+            [
+                "3b2b177f92c7e40a"
+            ]
+        ]
+    },
+    {
+        "id": "3b2b177f92c7e40a",
+        "type": "ui_gauge",
+        "z": "5c505a24b86fc31a",
+        "name": "",
+        "group": "b503fcd9c2b7502d",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "ระดับแอลกอฮอล์ (MQ-3)",
+        "label": "units",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "4095",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "1500",
+        "seg2": "2000",
+        "diff": false,
+        "className": "",
+        "x": 490,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "0218bf082a31cdb9",
+        "type": "mqtt in",
+        "z": "5c505a24b86fc31a",
+        "name": "เซ็นเซอร์ความชื้นในดิน",
+        "topic": "home/sensor/soil",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "9bb1441dc0bd6956",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 280,
+        "y": 620,
+        "wires": [
+            [
+                "39f6edad73f394df"
+            ]
+        ]
+    },
+    {
+        "id": "39f6edad73f394df",
+        "type": "ui_chart",
+        "z": "5c505a24b86fc31a",
+        "name": "",
+        "group": "abe7c08b0f05c5d9",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "ความชื้นในดิน (Soil)",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "4095",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 590,
+        "y": 620,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5b6888f2112ae262",
+        "type": "mqtt in",
+        "z": "5c505a24b86fc31a",
+        "name": "เซ็นเซอร์ความเข้มแสง:",
+        "topic": "home/sensor/light",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "9bb1441dc0bd6956",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 280,
+        "y": 720,
+        "wires": [
+            [
+                "19a4ef24519dcced"
+            ]
+        ]
+    },
+    {
+        "id": "19a4ef24519dcced",
+        "type": "ui_gauge",
+        "z": "5c505a24b86fc31a",
+        "name": "",
+        "group": "abe7c08b0f05c5d9",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "ความเข้มแสง (LDR)",
+        "label": "units",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "4095",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "1500",
+        "seg2": "2000",
+        "diff": false,
+        "className": "",
+        "x": 590,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "9bb1441dc0bd6956",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "192.168.1.9",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "87a945e9cffdae3c",
+        "type": "ui_group",
+        "name": "สภาพอากาศ & ระบบระบายความร้อน",
+        "tab": "de6b65bcc1dbee0a",
+        "order": 1,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "b503fcd9c2b7502d",
+        "type": "ui_group",
+        "name": "ระบบความปลอดภัย & แอลกอฮอล์",
+        "tab": "de6b65bcc1dbee0a",
+        "order": 2,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "abe7c08b0f05c5d9",
+        "type": "ui_group",
+        "name": "เซ็นเซอร์ดินและแสง",
+        "tab": "de6b65bcc1dbee0a",
+        "order": 3,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "de6b65bcc1dbee0a",
+        "type": "ui_tab",
+        "name": "Environment & Safety",
+        "icon": "dashboard",
+        "order": 4,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "6d87d4549212c867",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-dashboard": "3.6.6"
+        }
+    }
+]

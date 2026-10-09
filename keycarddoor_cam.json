@@ -1,0 +1,677 @@
+[
+    {
+        "id": "9587ecd82695815b",
+        "type": "tab",
+        "label": "Flow 9",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "04468ef1aa0378c2",
+        "type": "mqtt in",
+        "z": "9587ecd82695815b",
+        "name": "IR Sensor Trigger",
+        "topic": "security/ir_trigger",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "9bb1441dc0bd6956",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 360,
+        "y": 500,
+        "wires": [
+            [
+                "9a21927b0214d467"
+            ]
+        ]
+    },
+    {
+        "id": "9a21927b0214d467",
+        "type": "delay",
+        "z": "9587ecd82695815b",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "5",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "allowrate": true,
+        "outputs": 1,
+        "x": 600,
+        "y": 560,
+        "wires": [
+            [
+                "b58c5fbc3f49fe72"
+            ]
+        ]
+    },
+    {
+        "id": "b58c5fbc3f49fe72",
+        "type": "http request",
+        "z": "9587ecd82695815b",
+        "name": "take photo",
+        "method": "GET",
+        "ret": "bin",
+        "paytoqs": "ignore",
+        "url": "http://192.168.1.7/capture",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 770,
+        "y": 380,
+        "wires": [
+            [
+                "d7f1d41622d24eb4",
+                "2e2eda0e8dd3525f",
+                "20670d7702b3b7ca"
+            ]
+        ]
+    },
+    {
+        "id": "d7f1d41622d24eb4",
+        "type": "debug",
+        "z": "9587ecd82695815b",
+        "name": "debug 6",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 940,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "2e2eda0e8dd3525f",
+        "type": "function",
+        "z": "9587ecd82695815b",
+        "name": "Format Multipart",
+        "func": "// เตรียมข้อมูล Multipart Form Data ส่งให้ Flask AI\nvar boundary = '--------------------------' + Math.floor(Math.random() * 1000000000);\nvar filename = \"capture.jpg\";\n\nvar header = '--' + boundary + '\\r\\n' +\n             'Content-Disposition: form-data; name=\"image\"; filename=\"' + filename + '\"\\r\\n' +\n             'Content-Type: image/jpeg\\r\\n\\r\\n';\n\nvar footer = '\\r\\n--' + boundary + '--\\r\\n';\n\nvar headerBuffer = Buffer.from(header, 'utf8');\nvar footerBuffer = Buffer.from(footer, 'utf8');\n\n// บรรจุไฟล์ภาพ Buffer ลงใน Body\nmsg.payload = Buffer.concat([headerBuffer, msg.payload, footerBuffer]);\n\nmsg.headers = {\n    'Content-Type': 'multipart/form-data; boundary=' + boundary\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 860,
+        "y": 600,
+        "wires": [
+            [
+                "c9fd66391ff7f13b"
+            ]
+        ]
+    },
+    {
+        "id": "c9fd66391ff7f13b",
+        "type": "http request",
+        "z": "9587ecd82695815b",
+        "name": "AI Scan",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://192.168.1.9:5000/scan",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1040,
+        "y": 480,
+        "wires": [
+            [
+                "24f726ff6f640d50",
+                "20670d7702b3b7ca",
+                "acb80f4aec3e4d02",
+                "d57d46ec1f759c61"
+            ]
+        ]
+    },
+    {
+        "id": "24f726ff6f640d50",
+        "type": "debug",
+        "z": "9587ecd82695815b",
+        "name": "debug AI",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1240,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "20670d7702b3b7ca",
+        "type": "function",
+        "z": "9587ecd82695815b",
+        "name": "Prep UI Data",
+        "func": "// ถ้าข้อมูลมาจาก take photo (รูปภาพ Buffer) ให้เซฟเก็บไว้ใน flow\nif (Buffer.isBuffer(msg.payload)) {\n    var base64Img = \"data:image/jpeg;base64,\" + msg.payload.toString('base64');\n    flow.set('latest_image', base64Img);\n    return null; // รอผล AI Scan\n}\n\n// ถ้าข้อมูลมาจาก AI Scan (JSON) ให้ดึงรูปสดมารวมแล้วส่งออก UI\nif (typeof msg.payload === 'object') {\n    var imgData = flow.get('latest_image') || '';\n    \n    msg.payload = {\n        image: imgData,\n        status: msg.payload.status || 'danger',\n        name: msg.payload.name || 'Unknown',\n        is_known: msg.payload.is_known || false,\n        timestamp: new Date().toLocaleString(\"th-TH\"),\n        _random: Math.random() // บังคับ UI เรนเดอร์รูปใหม่ตลอดเวลา\n    };\n    return msg;\n}\n\nreturn null;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1210,
+        "y": 380,
+        "wires": [
+            [
+                "90901a5372862d4a",
+                "f870e8569e22811c"
+            ]
+        ]
+    },
+    {
+        "id": "90901a5372862d4a",
+        "type": "ui_template",
+        "z": "9587ecd82695815b",
+        "group": "9046e66731db2a90",
+        "name": "Dashboard UI",
+        "order": 1,
+        "width": "6",
+        "height": "8",
+        "format": "<div style=\"text-align: center; padding: 12px; background: #fafafa; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);\">\n    <!-- สถานะผลการตรวจจับ -->\n    <div ng-style=\"{\n        'background-color': (msg.payload.status == 'safe' || msg.payload.is_known) ? '#e8f5e9' : '#ffebee',\n        'border': '2px solid ' + ((msg.payload.status == 'safe' || msg.payload.is_known) ? '#4caf50' : '#f44336')\n    }\" style=\"border-radius: 8px; padding: 12px; margin-bottom: 12px;\">\n        \n        <h3 ng-style=\"{\n            'color': (msg.payload.status == 'safe' || msg.payload.is_known) ? '#2e7d32' : '#c62828'\n        }\" style=\"margin: 0; font-weight: bold;\">\n            {{ (msg.payload.status == 'safe' || msg.payload.is_known) ? 'สถานะ: ปลอดภัย' : 'สถานะ: อันตราย (พบผู้บุกรุก)' }}\n        </h3>\n        \n        <p style=\"margin: 6px 0 0 0; font-size: 16px; font-weight: 500; color: #333;\">\n            {{ (msg.payload.status == 'safe' || msg.payload.is_known) ? 'ยินดีต้อนรับ: ' + msg.payload.name : 'บุคคลระบุตัวตนไม่ได้ (' + msg.payload.name + ')' }}\n        </p>\n        <small style=\"color: #666;\">เวลาตรวจจับ: {{msg.payload.timestamp}}</small>\n    </div>\n\n    <!-- แสดงรูปถ่ายสด ณ วินาทีนั้น -->\n    <div ng-if=\"msg.payload.image\">\n        <img ng-src=\"{{msg.payload.image}}\" style=\"width: 100%; max-width: 360px; border-radius: 8px; border: 1px solid #ddd;\">\n    </div>\n</div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 1420,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "acb80f4aec3e4d02",
+        "type": "function",
+        "z": "9587ecd82695815b",
+        "name": "Prep MySQL Insert",
+        "func": "// ดึงข้อมูลผลลัพธ์จาก AI Scan\nvar name = msg.payload.name || 'Unknown';\nvar status = msg.payload.status || 'danger';\nvar imagePath = '/home/owen/camera_captures/latest.jpg';\n\n// สร้างคำสั่ง SQL บันทึกลง scan_logs\nvar sql = \"INSERT INTO scan_logs (person_name, status, image_path, scanned_at) VALUES ('\" + name + \"', '\" + status + \"', '\" + imagePath + \"', NOW())\";\n\n// ใส่ทั้ง topic และ payload ป้องกันโหนด MySQL สับสน\nmsg.topic = sql;\nmsg.payload = sql;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1250,
+        "y": 580,
+        "wires": [
+            [
+                "8f189dfde9cb20fc"
+            ]
+        ]
+    },
+    {
+        "id": "8f189dfde9cb20fc",
+        "type": "mysql",
+        "z": "9587ecd82695815b",
+        "mydb": "361fb32cc29cded7",
+        "name": "security_db",
+        "x": 1470,
+        "y": 660,
+        "wires": [
+            [
+                "c5048a39b3a1f9fa"
+            ]
+        ]
+    },
+    {
+        "id": "c5048a39b3a1f9fa",
+        "type": "function",
+        "z": "9587ecd82695815b",
+        "name": "Prep Query Logs",
+        "func": "// ดึง 10 รายการล่าสุด\nvar sql = \"SELECT id, person_name, status, scanned_at FROM scan_logs ORDER BY id DESC LIMIT 10\";\nmsg.topic = sql;\nmsg.payload = sql;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 530,
+        "y": 760,
+        "wires": [
+            [
+                "c355103e68da06f1"
+            ]
+        ]
+    },
+    {
+        "id": "c355103e68da06f1",
+        "type": "mysql",
+        "z": "9587ecd82695815b",
+        "mydb": "361fb32cc29cded7",
+        "name": "security_db_read",
+        "x": 750,
+        "y": 760,
+        "wires": [
+            [
+                "e628b6f47e3b78c1"
+            ]
+        ]
+    },
+    {
+        "id": "e628b6f47e3b78c1",
+        "type": "function",
+        "z": "9587ecd82695815b",
+        "name": "Format Table UI",
+        "func": "var rows = msg.payload || [];\nvar tableData = [];\n\nfor (var i = 0; i < rows.length; i++) {\n    var r = rows[i];\n    var dateStr = new Date(r.scanned_at).toLocaleString(\"th-TH\");\n    tableData.push({\n        id: r.id,\n        name: r.person_name,\n        status: r.status === 'safe' ? '✅ ปลอดภัย' : '🚨 อันตราย',\n        time: dateStr\n    });\n}\n\nmsg.payload = tableData;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 980,
+        "y": 760,
+        "wires": [
+            [
+                "92f28cd22a9be701"
+            ]
+        ]
+    },
+    {
+        "id": "92f28cd22a9be701",
+        "type": "ui_template",
+        "z": "9587ecd82695815b",
+        "group": "11a8b64ffabf5db4",
+        "name": "ui_template",
+        "order": 2,
+        "width": "6",
+        "height": "8",
+        "format": "<div style=\"padding: 10px; background: #ffffff; border-radius: 8px;\">\n    <h3 style=\"margin-top: 0; color: #333; text-align: center;\">📋 ประวัติการตรวจจับล่าสุด</h3>\n    <table style=\"width: 100%; border-collapse: collapse; font-family: sans-serif; text-align: left;\">\n        <thead>\n            <tr style=\"background-color: #f2f2f2; border-bottom: 2px solid #ddd;\">\n                <th style=\"padding: 8px; border: 1px solid #ddd; text-align: center;\">ID</th>\n                <th style=\"padding: 8px; border: 1px solid #ddd;\">ชื่อบุคคล</th>\n                <th style=\"padding: 8px; border: 1px solid #ddd;\">สถานะ</th>\n                <th style=\"padding: 8px; border: 1px solid #ddd;\">เวลาตรวจจับ</th>\n            </tr>\n        </thead>\n        <tbody>\n            <tr ng-repeat=\"row in msg.payload\" style=\"border-bottom: 1px solid #ddd;\">\n                <td style=\"padding: 8px; border: 1px solid #ddd; text-align: center;\">{{row.id}}</td>\n                <td style=\"padding: 8px; border: 1px solid #ddd; font-weight: bold;\">{{row.name}}</td>\n                <td style=\"padding: 8px; border: 1px solid #ddd;\">{{row.status}}</td>\n                <td style=\"padding: 8px; border: 1px solid #ddd; color: #666;\">{{row.time}}</td>\n            </tr>\n        </tbody>\n    </table>\n</div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 1210,
+        "y": 760,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d57d46ec1f759c61",
+        "type": "function",
+        "z": "9587ecd82695815b",
+        "name": "Prep n8n Webhook",
+        "func": "var isKnown = msg.payload.is_known;\nvar name = msg.payload.name || 'Unknown';\nvar timestamp = new Date().toLocaleString(\"th-TH\");\n\n// ดึงรูป Base64 จาก memory\nvar base64Img = flow.get('latest_image') || ''; \n\nvar captionText = \"\";\nvar alertType = \"\";\n\nif (isKnown) {\n    alertType = \"MEMBER\";\n    captionText = \"🟢 <b>WELCOME HOME | รายงานการเข้าบ้าน</b>\\n\\n\" +\n                  \"👤 <b>ชื่อสมาชิก:</b> \" + name + \"\\n\" +\n                  \"🔑 <b>สถานะ:</b> สมาชิกในบ้าน (Authorized)\\n\" +\n                  \"⏰ <b>เวลา:</b> \" + timestamp + \"\\n\" +\n                  \"📍 <b>ตำแหน่ง:</b> กล้องประตูหน้าบ้าน\\n\" +\n                  \"🛡 <b>สถานะระบบ:</b> ปลอดภัย\\n\\n\" +\n                  \"<i>ยินดีต้อนรับกลับบ้านครับ!</i>\";\n} else {\n    alertType = \"INTRUDER\";\n    var incId = \"INC-\" + Date.now().toString().slice(-6);\n    captionText = \"🚨 <b>INTRUDER ALERT | รายงานเตือนภัย</b>\\n\\n\" +\n                  \"⚠️ <b>คำเตือน: ตรวจพบบุคคลไม่ระบุตัวตน!</b>\\n\" +\n                  \"👤 <b>ผล AI:</b> Unknown / Unregistered\\n\" +\n                  \"⏰ <b>เวลา:</b> \" + timestamp + \"\\n\" +\n                  \"📍 <b>ตำแหน่ง:</b> กล้องประตูหน้าบ้าน\\n\" +\n                  \"🆔 <b>Incident ID:</b> #\" + incId + \"\\n\\n\" +\n                  \"📢 <i>ระบบบันทึกประวัติลง Database แล้ว โปรดตรวจสอบ</i>\";\n}\n\n// แพ็กข้อมูล JSON ส่งไปหา n8n\nmsg.payload = {\n    alert_type: alertType,\n    person_name: name,\n    is_known: isKnown,\n    timestamp: timestamp,\n    caption: captionText,\n    image_base64: base64Img\n};\n\nmsg.headers = {\n    'Content-Type': 'application/json'\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1250,
+        "y": 460,
+        "wires": [
+            [
+                "6487851b1b38e708"
+            ]
+        ]
+    },
+    {
+        "id": "6487851b1b38e708",
+        "type": "http request",
+        "z": "9587ecd82695815b",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://100.75.183.12:5678/webhook/security-alert",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1470,
+        "y": 460,
+        "wires": [
+            [
+                "328c5d854cb3a1bc"
+            ]
+        ]
+    },
+    {
+        "id": "328c5d854cb3a1bc",
+        "type": "debug",
+        "z": "9587ecd82695815b",
+        "name": "debug 7",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1480,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "f870e8569e22811c",
+        "type": "switch",
+        "z": "9587ecd82695815b",
+        "name": "",
+        "property": "payload.is_known",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 1150,
+        "y": 220,
+        "wires": [
+            [
+                "42f68cfac4ee2a0d"
+            ]
+        ]
+    },
+    {
+        "id": "f67c76afba75253e",
+        "type": "change",
+        "z": "9587ecd82695815b",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "UNLOCK_AI",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1560,
+        "y": 280,
+        "wires": [
+            [
+                "b5a5893357f843e1"
+            ]
+        ]
+    },
+    {
+        "id": "b5a5893357f843e1",
+        "type": "mqtt out",
+        "z": "9587ecd82695815b",
+        "name": "",
+        "topic": "home/door/command",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "9bb1441dc0bd6956",
+        "x": 2020,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "6e7e66848222d6b8",
+        "type": "ui_button",
+        "z": "9587ecd82695815b",
+        "name": "",
+        "group": "6fec28ea3ab2319b",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "🔓 สั่งเปิดประตู (Manual)",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "UNLOCK",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 1730,
+        "y": 380,
+        "wires": [
+            [
+                "b5a5893357f843e1"
+            ]
+        ]
+    },
+    {
+        "id": "0148c4d9750ca0cc",
+        "type": "ui_switch",
+        "z": "9587ecd82695815b",
+        "name": "",
+        "label": "ระบบปลดล็อกประตูออโต้ (AI Camera)",
+        "tooltip": "",
+        "group": "6fec28ea3ab2319b",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "json",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "json",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 1500,
+        "y": 60,
+        "wires": [
+            [
+                "a8842ce3ce8f39ae"
+            ]
+        ]
+    },
+    {
+        "id": "a8842ce3ce8f39ae",
+        "type": "change",
+        "z": "9587ecd82695815b",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "auto_mode",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1770,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "42f68cfac4ee2a0d",
+        "type": "switch",
+        "z": "9587ecd82695815b",
+        "name": "ดักจับสัญญาณสแกนหน้าก่อนเปิดประตู",
+        "property": "auto_mode",
+        "propertyType": "flow",
+        "rules": [
+            {
+                "t": "true"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 1440,
+        "y": 200,
+        "wires": [
+            [
+                "f67c76afba75253e"
+            ]
+        ]
+    },
+    {
+        "id": "7d96058a5fa5b98f",
+        "type": "ui_switch",
+        "z": "9587ecd82695815b",
+        "name": "",
+        "label": "🔓 ปลดล็อกค้างไว้ (Hold Open)",
+        "tooltip": "",
+        "group": "6fec28ea3ab2319b",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "HOLD",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "LOCK",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 1770,
+        "y": 440,
+        "wires": [
+            [
+                "b5a5893357f843e1"
+            ]
+        ]
+    },
+    {
+        "id": "9bb1441dc0bd6956",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "192.168.1.9",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "9046e66731db2a90",
+        "type": "ui_group",
+        "name": "Camera_Detection",
+        "tab": "267628ac2c3ec3bb",
+        "order": 1,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "361fb32cc29cded7",
+        "type": "MySQLdatabase",
+        "name": "security_db",
+        "host": "127.0.0.1",
+        "port": "3306",
+        "db": "security_db",
+        "tz": "",
+        "charset": "UTF8"
+    },
+    {
+        "id": "11a8b64ffabf5db4",
+        "type": "ui_group",
+        "name": "📋 ประวัติการตรวจจับล่าสุด",
+        "tab": "267628ac2c3ec3bb",
+        "order": 2,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "6fec28ea3ab2319b",
+        "type": "ui_group",
+        "name": "Keycard_Door",
+        "tab": "267628ac2c3ec3bb",
+        "order": 5,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "267628ac2c3ec3bb",
+        "type": "ui_tab",
+        "name": "Security System",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "65c2a99ce7653a9b",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-dashboard": "3.6.6",
+            "node-red-node-mysql": "3.0.3"
+        }
+    }
+]
