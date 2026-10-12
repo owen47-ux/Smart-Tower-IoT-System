@@ -2,11 +2,11 @@
 #include <PubSubClient.h>
 
 // --- ตั้งค่า Wi-Fi ---
-const char* ssid = "tanapark_104";      // ชื่อ Wi-Fi ของคุณ
-const char* password = "00104even";   // รหัสผ่าน Wi-Fi
+const char* ssid = "";      // ชื่อ Wi-Fi ของคุณ
+const char* password = "";   // รหัสผ่าน Wi-Fi
 
 // --- ตั้งค่า MQTT ---
-const char* mqtt_server = "192.168.1.9"; // IP เครื่องเซิร์ฟเวอร์ Node-RED ของคุณ
+const char* mqtt_server = ""; // IP เครื่องเซิร์ฟเวอร์ Node-RED ของคุณ
 const int mqtt_port = 1883;
 const char* mqtt_topic = "security/ir_trigger";
 
