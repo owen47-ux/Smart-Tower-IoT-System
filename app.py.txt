@@ -1,0 +1,136 @@
+import os
+import io
+import base64
+import numpy as np
+from PIL import Image
+import face_recognition
+from flask import Flask, request, jsonify
+from datetime import datetime
+
+app = Flask(__name__)
+
+# พาธโฟลเดอร์เก็บรูปใบหน้าที่อนุญาต
+KNOWN_FACES_DIR = "/home/owen/known_faces"
+KNOWN_FACE_ENCODINGS = []
+KNOWN_FACE_NAMES = []
+
+def load_known_faces():
+    global KNOWN_FACE_ENCODINGS, KNOWN_FACE_NAMES
+    KNOWN_FACE_ENCODINGS = []
+    KNOWN_FACE_NAMES = []
+    
+    if not os.path.exists(KNOWN_FACES_DIR):
+        print(f"❌ Error: ไม่พบโฟลเดอร์ {KNOWN_FACES_DIR}")
+        return
+
+    print("🔄 กำลังโหลดข้อมูลใบหน้าจากโฟลเดอร์ known_faces...")
+    for filename in os.listdir(KNOWN_FACES_DIR):
+        if filename.lower().endswith(('.jpg', '.jpeg', '.png')):
+            filepath = os.path.join(KNOWN_FACES_DIR, filename)
+            try:
+                image = face_recognition.load_image_file(filepath)
+                encodings = face_recognition.face_encodings(image)
+                if len(encodings) > 0:
+                    KNOWN_FACE_ENCODINGS.append(encodings[0])
+                    raw_name = os.path.splitext(filename)[0]
+                    clean_name = ''.join([i for i in raw_name if not i.isdigit()]).strip()
+                    if not clean_name:
+                        clean_name = "owen"
+                    KNOWN_FACE_NAMES.append(clean_name)
+                    print(f"  ✓ โหลดใบหน้าสำเร็จ: {clean_name} ({filename})")
+            except Exception as e:
+                print(f"  ✕ ไม่สามารถโหลดรูป {filename}: {e}")
+
+    print(f"✅ โหลดใบหน้าทั้งหมดเรียบร้อย: {len(KNOWN_FACE_ENCODINGS)} รูป\n")
+
+load_known_faces()
+
+@app.route('/scan', methods=['POST'])
+def scan_face():
+    try:
+        img_bytes = None
+
+        if 'file' in request.files:
+            img_bytes = request.files['file'].read()
+        elif 'image' in request.files:
+            img_bytes = request.files['image'].read()
+        elif request.is_json and request.json and 'image' in request.json:
+            b64_str = request.json['image']
+            if ',' in b64_str:
+                b64_str = b64_str.split(',')[1]
+            img_bytes = base64.b64decode(b64_str)
+        elif request.form and 'image' in request.form:
+            b64_str = request.form['image']
+            if ',' in b64_str:
+                b64_str = b64_str.split(',')[1]
+            img_bytes = base64.b64decode(b64_str)
+        elif request.data:
+            try:
+                raw_data = request.data.decode('utf-8')
+                if ',' in raw_data:
+                    raw_data = raw_data.split(',')[1]
+                img_bytes = base64.b64decode(raw_data)
+            except Exception:
+                img_bytes = request.data
+
+        if not img_bytes:
+            return jsonify({'status': 'danger', 'is_known': False, 'name': 'No Image Received'}), 400
+
+        image = Image.open(io.BytesIO(img_bytes)).convert('RGB')
+        rgb_img = np.array(image)
+        
+        # ค้นหาตำแหน่งใบหน้าแบบละเอียด (Upsampling = 2)
+        face_locations = face_recognition.face_locations(rgb_img, number_of_times_to_upsample=2)
+        face_encodings = face_recognition.face_encodings(rgb_img, face_locations)
+
+        name = "Unknown"
+        status = "danger"
+        is_known = False
+        calc_distance = 1.0
+
+        if len(face_encodings) > 0:
+            unknown_encoding = face_encodings[0]
+            
+            if len(KNOWN_FACE_ENCODINGS) > 0:
+                face_distances = face_recognition.face_distance(KNOWN_FACE_ENCODINGS, unknown_encoding)
+                best_match_index = int(np.argmin(face_distances))
+                best_distance = float(face_distances[best_match_index])
+                calc_distance = best_distance
+
+                # ปรับเกณฑ์ความเข้มงวดความปลอดภัยสูงสุด (TOLERANCE = 0.40)
+                TOLERANCE = 0.40 
+
+                print(f"📊 [AI Match Log] ระยะห่างใบหน้า (Distance): {best_distance:.4f} | เกณฑ์ที่ตั้งไว้: <= {TOLERANCE}")
+
+                if best_distance <= TOLERANCE:
+                    name = KNOWN_FACE_NAMES[best_match_index]
+                    status = "safe"
+                    is_known = True
+                    print(f"  🟢 ผลลัพธ์: ผ่านการตรวจสอบ -> อนุญาตให้เข้าถึง ({name})")
+                else:
+                    name = "Unknown"
+                    status = "danger"
+                    is_known = False
+                    print(f"  🔴 ผลลัพธ์: ปฏิเสธ (ไม่ใช่ {KNOWN_FACE_NAMES[best_match_index]} | ระยะห่าง {best_distance:.4f} > {TOLERANCE})")
+        else:
+            name = "No Face Detected"
+            status = "danger"
+            is_known = False
+            print("  ⚠️ ผลลัพธ์: ตรวจไม่พบใบหน้าในรูป")
+
+        now_str = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+
+        return jsonify({
+            'status': status,
+            'is_known': is_known,
+            'name': name,
+            'distance': round(calc_distance, 4),
+            'timestamp': now_str
+        })
+
+    except Exception as e:
+        print(f"❌ Error: {e}")
+        return jsonify({'status': 'danger', 'is_known': False, 'name': 'Error Processing'}), 500
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000, debug=True)
