@@ -3,8 +3,8 @@
 #include <WebServer.h>
 
 // --- ตั้งค่า Wi-Fi ---
-const char* ssid = "tanapark_104";      // ชื่อ Wi-Fi
-const char* password = "00104even";   // รหัสผ่าน Wi-Fi
+const char* ssid = "";      // ชื่อ Wi-Fi
+const char* password = "";   // รหัสผ่าน Wi-Fi
 
 WebServer server(80);
 
