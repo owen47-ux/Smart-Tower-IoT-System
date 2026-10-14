@@ -1,0 +1,644 @@
+[
+    {
+        "id": "19154a615a26bdc3",
+        "type": "tab",
+        "label": "Environment & Safety V5",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "cc12867421a7f53c",
+        "type": "mqtt in",
+        "z": "19154a615a26bdc3",
+        "name": "DHT22 Temp",
+        "topic": "home/sensor/dht22_temp",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "9bb1441dc0bd6956",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 130,
+        "y": 80,
+        "wires": [
+            [
+                "1a99f3c7c3c87f05"
+            ]
+        ]
+    },
+    {
+        "id": "5ad069061db7f085",
+        "type": "mqtt in",
+        "z": "19154a615a26bdc3",
+        "name": "DHT22 Humidity",
+        "topic": "home/sensor/dht22_hum",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "9bb1441dc0bd6956",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 140,
+        "y": 140,
+        "wires": [
+            [
+                "f5bd4bfc025f1c26"
+            ]
+        ]
+    },
+    {
+        "id": "80dbde7498832654",
+        "type": "mqtt in",
+        "z": "19154a615a26bdc3",
+        "name": "DHT11 Temp",
+        "topic": "home/sensor/dht11_temp",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "9bb1441dc0bd6956",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 130,
+        "y": 200,
+        "wires": [
+            [
+                "013879bb5b6c0a68"
+            ]
+        ]
+    },
+    {
+        "id": "44e05b0d1c20ab33",
+        "type": "mqtt in",
+        "z": "19154a615a26bdc3",
+        "name": "DHT11 Humidity",
+        "topic": "home/sensor/dht11_hum",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "9bb1441dc0bd6956",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 140,
+        "y": 260,
+        "wires": [
+            [
+                "84e07d2d7f279f2c"
+            ]
+        ]
+    },
+    {
+        "id": "2496a84c0b023a38",
+        "type": "mqtt in",
+        "z": "19154a615a26bdc3",
+        "name": "MQ-3 Percent",
+        "topic": "home/sensor/alcohol",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "9bb1441dc0bd6956",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 130,
+        "y": 320,
+        "wires": [
+            [
+                "add8faf4bf3fca5b"
+            ]
+        ]
+    },
+    {
+        "id": "f989f996d3f8f500",
+        "type": "mqtt in",
+        "z": "19154a615a26bdc3",
+        "name": "Gas Alarm Status",
+        "topic": "home/alarm/gas",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "9bb1441dc0bd6956",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 140,
+        "y": 380,
+        "wires": [
+            [
+                "4ae93a96e1a792fa"
+            ]
+        ]
+    },
+    {
+        "id": "fba69dbf3e7067cc",
+        "type": "mqtt in",
+        "z": "19154a615a26bdc3",
+        "name": "Soil Moisture",
+        "topic": "home/sensor/soil",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "9bb1441dc0bd6956",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 130,
+        "y": 440,
+        "wires": [
+            [
+                "19bfc65220ba88f1"
+            ]
+        ]
+    },
+    {
+        "id": "88ad623668cf8526",
+        "type": "mqtt in",
+        "z": "19154a615a26bdc3",
+        "name": "LDR Light",
+        "topic": "home/sensor/light",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "9bb1441dc0bd6956",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 120,
+        "y": 500,
+        "wires": [
+            [
+                "809a105b3e4111f6"
+            ]
+        ]
+    },
+    {
+        "id": "1a99f3c7c3c87f05",
+        "type": "ui_gauge",
+        "z": "19154a615a26bdc3",
+        "name": "DHT22 Temp Gauge",
+        "group": "group_weather",
+        "order": 1,
+        "width": "3",
+        "height": "3",
+        "gtype": "gage",
+        "title": "อุณหภูมิ DHT22",
+        "label": "°C",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 50,
+        "colors": [
+            "#00b5ad",
+            "#e65100",
+            "#ff0000"
+        ],
+        "seg1": "30",
+        "seg2": "38",
+        "x": 390,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "f5bd4bfc025f1c26",
+        "type": "ui_gauge",
+        "z": "19154a615a26bdc3",
+        "name": "DHT22 Hum Gauge",
+        "group": "group_weather",
+        "order": 2,
+        "width": "3",
+        "height": "3",
+        "gtype": "gage",
+        "title": "ความชื้น DHT22",
+        "label": "%",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 100,
+        "colors": [
+            "#e0e0e0",
+            "#2196f3",
+            "#0d47a1"
+        ],
+        "seg1": "40",
+        "seg2": "70",
+        "x": 390,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "013879bb5b6c0a68",
+        "type": "ui_gauge",
+        "z": "19154a615a26bdc3",
+        "name": "DHT11 Temp Gauge",
+        "group": "group_weather",
+        "order": 3,
+        "width": "3",
+        "height": "3",
+        "gtype": "gage",
+        "title": "อุณหภูมิ DHT11",
+        "label": "°C",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 50,
+        "colors": [
+            "#00b5ad",
+            "#e65100",
+            "#ff0000"
+        ],
+        "seg1": "30",
+        "seg2": "38",
+        "x": 390,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "84e07d2d7f279f2c",
+        "type": "ui_gauge",
+        "z": "19154a615a26bdc3",
+        "name": "DHT11 Hum Gauge",
+        "group": "group_weather",
+        "order": 4,
+        "width": "3",
+        "height": "3",
+        "gtype": "gage",
+        "title": "ความชื้น DHT11",
+        "label": "%",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 100,
+        "colors": [
+            "#e0e0e0",
+            "#2196f3",
+            "#0d47a1"
+        ],
+        "seg1": "40",
+        "seg2": "70",
+        "x": 390,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "4ae93a96e1a792fa",
+        "type": "ui_template",
+        "z": "19154a615a26bdc3",
+        "group": "group_sensors",
+        "name": "Gas Status Card",
+        "order": 1,
+        "width": "6",
+        "height": "2",
+        "format": "<div style=\"text-align: center; padding: 12px; border-radius: 8px; background-color: {{msg.payload == 'ALARM' ? '#3e1a1a' : '#1b382b'}}; border: 1px solid {{msg.payload == 'ALARM' ? '#f44336' : '#4caf50'}};\"><div style=\"font-size: 13px; color: #aaa; margin-bottom: 4px;\">สถานะการตรวจจับแก๊ส / แอลกอฮอล์</div><div style=\"font-size: 18px; font-weight: bold; color: {{msg.payload == 'ALARM' ? '#ff5252' : '#66bb6a'}};\">{{msg.payload == 'ALARM' ? '⚠️ ตรวจพบแก๊สรั่ว!' : '✅ ปกติ ปลอดภัย'}}</div></div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "x": 390,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "add8faf4bf3fca5b",
+        "type": "ui_gauge",
+        "z": "19154a615a26bdc3",
+        "name": "MQ-3 Gauge",
+        "group": "group_sensors",
+        "order": 2,
+        "width": "6",
+        "height": "3",
+        "gtype": "gage",
+        "title": "ระดับแก๊ส MQ-3",
+        "label": "%",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 100,
+        "colors": [
+            "#4caf50",
+            "#ff9800",
+            "#f44336"
+        ],
+        "seg1": "30",
+        "seg2": "50",
+        "x": 380,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "19bfc65220ba88f1",
+        "type": "ui_gauge",
+        "z": "19154a615a26bdc3",
+        "name": "Soil Moisture Gauge",
+        "group": "group_sensors",
+        "order": 3,
+        "width": "3",
+        "height": "3",
+        "gtype": "gage",
+        "title": "ความชื้นในดิน",
+        "label": "%",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 100,
+        "colors": [
+            "#ff9800",
+            "#8bc34a",
+            "#00bcd4"
+        ],
+        "seg1": "30",
+        "seg2": "70",
+        "x": 380,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "809a105b3e4111f6",
+        "type": "ui_gauge",
+        "z": "19154a615a26bdc3",
+        "name": "LDR Light Gauge",
+        "group": "group_sensors",
+        "order": 4,
+        "width": "3",
+        "height": "3",
+        "gtype": "gage",
+        "title": "ความเข้มแสง LDR",
+        "label": "%",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 100,
+        "colors": [
+            "#3f51b5",
+            "#ffeb3b",
+            "#ff9800"
+        ],
+        "seg1": "30",
+        "seg2": "70",
+        "x": 370,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "502a128a05e433c2",
+        "type": "ui_switch",
+        "z": "19154a615a26bdc3",
+        "name": "Mode Switch",
+        "label": "โหมดระบบ (AUTO / MANUAL)",
+        "group": "group_control",
+        "order": 1,
+        "width": "6",
+        "height": "1",
+        "passthru": true,
+        "topic": "home/mode/set",
+        "topicType": "str",
+        "onvalue": "AUTO",
+        "onvalueType": "str",
+        "offvalue": "MANUAL",
+        "offvalueType": "str",
+        "x": 130,
+        "y": 580,
+        "wires": [
+            [
+                "237162826d968f40"
+            ]
+        ]
+    },
+    {
+        "id": "e3b3ed1ac8bb81f2",
+        "type": "ui_slider",
+        "z": "19154a615a26bdc3",
+        "name": "Temp Threshold Slider",
+        "label": "เกณฑ์อุณหภูมิ AUTO: {{value}} °C",
+        "tooltip": "",
+        "group": "group_control",
+        "order": 2,
+        "width": "6",
+        "height": "1",
+        "passthru": true,
+        "outs": "all",
+        "topic": "home/threshold/temp/set",
+        "topicType": "str",
+        "min": "20",
+        "max": "50",
+        "step": 1,
+        "x": 160,
+        "y": 640,
+        "wires": [
+            [
+                "237162826d968f40"
+            ]
+        ]
+    },
+    {
+        "id": "b4a9b47e62d61b48",
+        "type": "ui_slider",
+        "z": "19154a615a26bdc3",
+        "name": "Gas Threshold Slider",
+        "label": "เกณฑ์เตือนแก๊ส MQ-3: {{value}} %",
+        "tooltip": "",
+        "group": "group_control",
+        "order": 3,
+        "width": "6",
+        "height": "1",
+        "passthru": true,
+        "outs": "all",
+        "topic": "home/threshold/gas/set",
+        "topicType": "str",
+        "min": "10",
+        "max": "90",
+        "step": 1,
+        "x": 160,
+        "y": 680,
+        "wires": [
+            [
+                "237162826d968f40"
+            ]
+        ]
+    },
+    {
+        "id": "e787b24a3c6748bd",
+        "type": "ui_switch",
+        "z": "19154a615a26bdc3",
+        "name": "Relay 1 Switch",
+        "label": "รีเลย์ 1",
+        "group": "group_control",
+        "order": 4,
+        "width": "3",
+        "height": "1",
+        "passthru": true,
+        "topic": "home/relay1/set",
+        "topicType": "str",
+        "onvalue": "ON",
+        "onvalueType": "str",
+        "offvalue": "OFF",
+        "offvalueType": "str",
+        "x": 130,
+        "y": 720,
+        "wires": [
+            [
+                "237162826d968f40"
+            ]
+        ]
+    },
+    {
+        "id": "f6be7e4d59392b54",
+        "type": "ui_switch",
+        "z": "19154a615a26bdc3",
+        "name": "Relay 2 Switch",
+        "label": "รีเลย์ 2",
+        "group": "group_control",
+        "order": 5,
+        "width": "3",
+        "height": "1",
+        "passthru": true,
+        "topic": "home/relay2/set",
+        "topicType": "str",
+        "onvalue": "ON",
+        "onvalueType": "str",
+        "offvalue": "OFF",
+        "offvalueType": "str",
+        "x": 130,
+        "y": 760,
+        "wires": [
+            [
+                "237162826d968f40"
+            ]
+        ]
+    },
+    {
+        "id": "c6f27ff6bbf7da38",
+        "type": "ui_switch",
+        "z": "19154a615a26bdc3",
+        "name": "Relay 3 Switch",
+        "label": "รีเลย์ 3",
+        "group": "group_control",
+        "order": 6,
+        "width": "3",
+        "height": "1",
+        "passthru": true,
+        "topic": "home/relay3/set",
+        "topicType": "str",
+        "onvalue": "ON",
+        "onvalueType": "str",
+        "offvalue": "OFF",
+        "offvalueType": "str",
+        "x": 130,
+        "y": 800,
+        "wires": [
+            [
+                "237162826d968f40"
+            ]
+        ]
+    },
+    {
+        "id": "99873081afb4af70",
+        "type": "ui_switch",
+        "z": "19154a615a26bdc3",
+        "name": "Relay 4 Switch",
+        "label": "รีเลย์ 4",
+        "group": "group_control",
+        "order": 7,
+        "width": "3",
+        "height": "1",
+        "passthru": true,
+        "topic": "home/relay4/set",
+        "topicType": "str",
+        "onvalue": "ON",
+        "onvalueType": "str",
+        "offvalue": "OFF",
+        "offvalueType": "str",
+        "x": 130,
+        "y": 840,
+        "wires": [
+            [
+                "237162826d968f40"
+            ]
+        ]
+    },
+    {
+        "id": "237162826d968f40",
+        "type": "mqtt out",
+        "z": "19154a615a26bdc3",
+        "name": "MQTT Command Out",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "9bb1441dc0bd6956",
+        "x": 410,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "9bb1441dc0bd6956",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "192.168.1.9",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "group_weather",
+        "type": "ui_group",
+        "name": "🌡️ สภาพอากาศ (DHT11 / DHT22)",
+        "tab": "ui_tab_main",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "group_sensors",
+        "type": "ui_group",
+        "name": "🌱 เซ็นเซอร์ดิน แสง และ ความปลอดภัย",
+        "tab": "ui_tab_main",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "group_control",
+        "type": "ui_group",
+        "name": "🎛️ สวิตช์และระบบควบคุมรีเลย์",
+        "tab": "ui_tab_main",
+        "order": 3,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "ui_tab_main",
+        "type": "ui_tab",
+        "name": "Environment & Control",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "adb191cfefdfeb25",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-dashboard": "3.6.6"
+        }
+    }
+]
